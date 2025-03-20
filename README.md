@@ -1,4 +1,4 @@
-# OpenSend Assignment
+# Opensend Assignment
 
 A React application for managing widgets and dashboards.
 
