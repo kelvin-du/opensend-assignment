@@ -1,0 +1,5 @@
+.widget-board {
+  :global(.react-grid-placeholder) {
+    border-radius: var(--radius-md);
+  }
+}
