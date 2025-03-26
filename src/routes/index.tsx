@@ -1,13 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { getAccessToken } from "@/features/auth/utils";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
-  component: Index,
-})
+export const Route = createFileRoute("/")({
+  beforeLoad() {
+    if (!getAccessToken()) {
+      throw redirect({ to: "/login" });
+    }
+    throw redirect({ to: "/dashboard" });
+  },
+  component: RouteComponent,
+});
 
-function Index() {
-  return (
-    <div className="">
-      <h3>Welcome Home!</h3>
-    </div>
-  )
+function RouteComponent() {
+  return <></>;
 }
