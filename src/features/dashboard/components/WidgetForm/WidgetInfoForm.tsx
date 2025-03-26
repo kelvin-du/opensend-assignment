@@ -16,12 +16,13 @@ export default function WidgetInfoForm({
 }) {
   const { register, getValues, formState } = useFormContext<WidgetFormFields>();
 
+  const isEditing = !!getValues("id");
   const isAddButtonDisabled = !formState.isValid;
 
   return (
     <>
       <FormTitle
-        title="Configure widget"
+        title={isEditing ? "Editing: Configure widget" : "Configure widget"}
         description="Add a title and select data to display on the overview page"
       />
       <FormBody>

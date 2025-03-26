@@ -13,12 +13,14 @@ export default function WidgetTypeSelectionForm({
   handleCancel: () => void;
   handleNext: () => void;
 }) {
-  const { register } = useFormContext<WidgetFormFields>();
+  const { register, getValues } = useFormContext<WidgetFormFields>();
+
+  const isEditing = !!getValues("id");
 
   return (
     <>
       <FormTitle
-        title="Overview"
+        title={isEditing ? "Editing: Overview" : "Overview"}
         description="Select a widget type to add to the overview page"
       />
       <FormBody className="grid-cols-2">
@@ -33,14 +35,14 @@ export default function WidgetTypeSelectionForm({
               className="peer hidden"
               {...register("type")}
             />
-            <div className="bg-neutral-50 dark:bg-gray-500 border-2 p-4 sm:p-6 border-gray-400 peer-checked:border-primary rounded-md flex flex-col items-center gap-2">
+            <div className="bg-neutral-50 dark:bg-gray-800 border-2 p-4 sm:p-6 border-gray-400 peer-checked:border-primary rounded-md flex flex-col items-center gap-2">
               <div className="w-[72px] sm:w-[120px] aspect-square border border-gray-400 flex items-center justify-center">
                 <widgetType.Icon
-                  className="text-gray-500 dark:text-gray-200"
+                  className="text-gray-500 dark:text-gray-100"
                   size={46}
                 />
               </div>
-              <span className="text-center pt-2 text-sm sm:text-md dark:text-gray-200">
+              <span className="text-center pt-2 text-sm sm:text-md dark:text-gray-100">
                 {widgetType.name}
               </span>
             </div>
