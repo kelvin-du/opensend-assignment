@@ -3,9 +3,10 @@ import Input from "@/common/components/Input";
 import { InputPassword } from "@/common/components/InputPassword";
 import Logo from "@/common/components/Logo";
 import { useDarkMode } from "@/common/hooks/dark-mode";
+import { redirectToDefaultRoute } from "@/common/utils/router";
 import { useLoginMutation } from "@/features/auth/api";
 import { LOGIN_ERROR_CODES } from "@/features/auth/error-codes";
-import { setTokens } from "@/features/auth/utils";
+import { getAccessToken, setTokens } from "@/features/auth/utils";
 import { isQueryError } from "@/redux/rtk-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -14,6 +15,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const Route = createFileRoute("/login")({
+  beforeLoad: () => {
+    if (getAccessToken()) {
+      return redirectToDefaultRoute();
+    }
+  },
   component: LoginRouteComponent,
 });
 

@@ -49,6 +49,8 @@ export default function Dialog({
   return (
     <dialog
       ref={dialogRef}
+      onMouseDown={(e) => e.stopPropagation()}
+      onTouchStartCapture={(e) => e.stopPropagation()}
       onClick={handleBackdropClick}
       onClose={onClose}
       className={cx(

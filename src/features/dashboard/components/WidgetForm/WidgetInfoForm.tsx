@@ -1,9 +1,11 @@
 import Button from "@/common/components/Button";
 import Input from "@/common/components/Input";
 import { useFormContext } from "react-hook-form";
-import { NewWidgetFormFields } from ".";
 import { getWidgetTypeDisplayValue } from "../../utils";
-import FormTitle from "./FormTitle";
+import FormTitle from "../WidgetFormLayout/FormTitle";
+import FormFooter from "../WidgetFormLayout/FormFooter";
+import { WidgetFormFields } from ".";
+import FormBody from "../WidgetFormLayout/FormBody";
 
 export default function WidgetInfoForm({
   handleBack,
@@ -12,17 +14,9 @@ export default function WidgetInfoForm({
   handleBack: () => void;
   handleSubmit: () => void;
 }) {
-  const {
-    register,
-    getValues,
-    formState: { errors, dirtyFields },
-  } = useFormContext<NewWidgetFormFields>();
+  const { register, getValues, formState } = useFormContext<WidgetFormFields>();
 
-  const isAddButtonDisabled =
-    !!errors.title ||
-    !!errors.description ||
-    !dirtyFields.title ||
-    !dirtyFields.description;
+  const isAddButtonDisabled = !formState.isValid;
 
   return (
     <>
@@ -30,8 +24,8 @@ export default function WidgetInfoForm({
         title="Configure widget"
         description="Add a title and select data to display on the overview page"
       />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4">
-        <div className="col-span-2">
+      <FormBody>
+        <div className="md:col-span-2">
           <div className="bg-white dark:bg-gray-800 rounded-md px-6 py-4">
             <div className="text-neutral-500 dark:text-gray-300 font-semibold text-sm">
               Value
@@ -39,13 +33,13 @@ export default function WidgetInfoForm({
             <div className="text-2xl font-bold dark:text-gray-50">0</div>
           </div>
         </div>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-y-6">
           <div className="bg-white dark:bg-gray-800 rounded-md px-6 py-4">
             <div className="text-gray-500 dark:text-gray-300 font-semibold">
               Widget type
             </div>
             <div className="dark:text-gray-50">
-              {getWidgetTypeDisplayValue(getValues("widgetType"))}
+              {getWidgetTypeDisplayValue(getValues("type"))}
             </div>
           </div>
 
@@ -61,16 +55,16 @@ export default function WidgetInfoForm({
             </div>
           </div>
         </div>
-      </div>
+      </FormBody>
 
-      <div className="grid grid-cols-2 gap-4 pt-4 sm:pt-8 md:pt-12">
+      <FormFooter>
         <Button variant="secondary" onClick={handleBack}>
           Back
         </Button>
         <Button onClick={handleSubmit} disabled={isAddButtonDisabled}>
           Add
         </Button>
-      </div>
+      </FormFooter>
     </>
   );
 }

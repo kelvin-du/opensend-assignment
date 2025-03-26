@@ -42,6 +42,16 @@ export const dashboardSlice = createSlice({
         }
       });
     },
+    editWidget: (state, action: PayloadAction<WidgetInfo>) => {
+      const editingWidget = action.payload;
+      const targetWidget = state.widgets.find((w) => w.id === editingWidget.id);
+      if (!targetWidget) {
+        return;
+      }
+      targetWidget.type = editingWidget.type;
+      targetWidget.title = editingWidget.title;
+      targetWidget.description = editingWidget.description;
+    },
     updateLayouts: (state, action: PayloadAction<ReactGridLayout.Layouts>) => {
       state.layouts = action.payload;
     },
